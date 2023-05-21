@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateVenueDto {
   @ApiProperty()
-  name: string;
+  venueName: string;
 
   @ApiProperty()
   username: string;
