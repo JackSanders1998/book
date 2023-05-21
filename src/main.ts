@@ -9,7 +9,6 @@ async function bootstrap() {
     .setTitle('Venue Booking APIs')
     .setDescription('APIs for venues to book musicians')
     .setVersion('1.0')
-    // .addTag('book')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
