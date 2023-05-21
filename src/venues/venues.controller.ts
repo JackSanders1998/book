@@ -10,8 +10,10 @@ import {
 import { VenuesService } from './venues.service';
 import { CreateVenueDto } from './dto/create-venue.dto';
 import { UpdateVenueDto } from './dto/update-venue.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('venues')
+@ApiTags('venues')
 export class VenuesController {
   constructor(private readonly venuesService: VenuesService) {}
 
@@ -20,23 +22,26 @@ export class VenuesController {
     return this.venuesService.create(createVenueDto);
   }
 
-  @Get()
-  findAll() {
-    return this.venuesService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.venuesService.findOne(+id);
+    return this.venuesService.findOne({ id: Number(id) });
+  }
+
+  @Get()
+  findAll() {
+    return this.venuesService.findAll({});
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVenueDto: UpdateVenueDto) {
-    return this.venuesService.update(+id, updateVenueDto);
+  update(@Param('id') id: string, @Body() data: UpdateVenueDto) {
+    return this.venuesService.update({
+      where: { id: Number(id) },
+      data,
+    });
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.venuesService.remove(+id);
+    return this.venuesService.remove({ id: Number(id) });
   }
 }
