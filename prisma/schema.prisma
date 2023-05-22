@@ -54,10 +54,19 @@ model TimeSlot {
 
 model Booking {
   id         Int       @id @default(autoincrement())
+  status     BookingStatus @default(PENDING)
   venue      Venue?    @relation(fields: [venueId], references: [id])
   venueId    Int?
   artist     Artist?   @relation(fields: [artistId], references: [id])
   artistId   Int?
   timeSlot   TimeSlot? @relation(fields: [timeSlotId], references: [id])
   timeSlotId Int?
+}
+
+enum BookingStatus {
+  PENDING   // Default
+  REQUESTED // Artist requests
+  CONFIRMED // Venue confirms
+  CANCELLED // Either party cancels
+  DELETED   // Venue deletes
 }
