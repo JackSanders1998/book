@@ -3,8 +3,9 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { VenuesModule } from './venues/venues.module';
 import { TimeslotsModule } from './timeslots/timeslots.module';
+import { BookingsModule } from './bookings/bookings.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, VenuesModule, TimeslotsModule],
+  imports: [AuthModule, UsersModule, VenuesModule, TimeslotsModule, BookingsModule],
 })
 export class AppModule {}
