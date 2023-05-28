@@ -25,7 +25,6 @@ const venueInput = (overrides: Record<string, unknown>) => {
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
-  let userId: number;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -37,39 +36,96 @@ describe('AppController (e2e)', () => {
   });
 
   it('/venues (POST)', async () => {
+    console.log('=====create user=====');
     const { status: userStatus, body: userBody } = await request(
       app.getHttpServer(),
     )
       .post('/users')
       .send(userInput({}));
-    userId = userBody.id;
-    console.log(userStatus, userBody);
     expect(userStatus).toBe(201);
     expect(userBody).toEqual(
-      userInput({
-        id: expect.any(Number),
-        createdAt: expect.any(Date),
-        updatedAt: expect.any(Date),
-      }),
+      userInput(
+        userInput({
+          id: expect.any(Number),
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        }),
+      ),
     );
+    console.log('user created successfully', {
+      status: userStatus,
+      body: userBody,
+    });
 
-    const { status, body } = await request(app.getHttpServer())
+    console.log('=====create venue=====');
+    const { status: venueStatus, body: venueBody } = await request(
+      app.getHttpServer(),
+    )
       .post('/venues')
       .send(venueInput({ userId: userBody.id }));
-    console.log(status, body);
-    expect(status).toBe(200);
-    expect(body).toEqual(venueInput({ id: expect.any(Number) }));
+    expect(venueStatus).toBe(201);
+    expect(venueBody).toEqual(
+      venueInput({
+        id: expect.any(Number),
+        userId: userBody.id,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
+      }),
+    );
+    console.log('venue created successfully', {
+      status: venueStatus,
+      body: venueBody,
+    });
 
-    const { status: deleteStatus, body: bodyStatus } = await request(
+    console.log('=====get venue=====');
+    const { status: getVenueStatus, body: getVenueBody } = await request(
       app.getHttpServer(),
-    ).delete(`/users/${userId}`);
-    expect(deleteStatus).toBe(200);
-    expect(bodyStatus).toEqual([]);
-  });
+    ).get(`/venues/${venueBody.id}`);
+    expect(getVenueStatus).toBe(200);
+    expect(getVenueBody).toEqual(
+      venueInput({
+        id: expect.any(Number),
+        userId: userBody.id,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
+      }),
+    );
+    console.log('venue retrieved successfully', {
+      status: getVenueStatus,
+      body: getVenueBody,
+    });
 
-  // it('/venues (GET)', async () => {
-  //   const { status, body } = await request(app.getHttpServer()).get('/venues');
-  //   expect(status).toBe(200);
-  //   expect(body).toEqual([]);
-  // });
+    console.log('=====update venue=====');
+    const { status: updateVenueStatus, body: updateVenueBody } = await request(
+      app.getHttpServer(),
+    )
+      .patch(`/venues/${venueBody.id}`)
+      .send(
+        venueInput({
+          userId: userBody.id,
+          published: true,
+          venueName: 'updated venue',
+        }),
+      );
+    expect(updateVenueStatus).toBe(200);
+    expect(updateVenueBody).toEqual(
+      venueInput({
+        id: expect.any(Number),
+        userId: userBody.id,
+        venueName: 'updated venue',
+        published: true,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
+      }),
+    );
+    console.log('venue updated successfully', {
+      status: updateVenueStatus,
+      body: updateVenueBody,
+    });
+
+    console.log('=====delete venue=====');
+    await request(app.getHttpServer()).delete(`/venues/${venueBody.id}`);
+    console.log('=====delete user=====');
+    await request(app.getHttpServer()).delete(`/users/${userBody.id}`);
+  });
 });
