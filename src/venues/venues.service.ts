@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Venue } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateVenueDto } from './dto/create-venue.dto';
 
 @Injectable()
 export class VenuesService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateVenueDto): Promise<Venue> {
+  create(data: CreateVenueDto): Promise<Venue> {
     return this.prisma.venue.create({
       data,
     });
   }
 
-  async findAll(params: {
+  findAll(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.VenueWhereUniqueInput;
@@ -30,13 +30,13 @@ export class VenuesService {
     });
   }
 
-  async findOne(where: Prisma.VenueWhereUniqueInput): Promise<Venue | null> {
+  findOne(where: Prisma.VenueWhereUniqueInput): Promise<Venue | null> {
     return this.prisma.venue.findUnique({
       where,
     });
   }
 
-  async update(params: {
+  update(params: {
     where: Prisma.VenueWhereUniqueInput;
     data: Prisma.VenueUpdateInput;
   }): Promise<Venue> {
@@ -47,7 +47,7 @@ export class VenuesService {
     });
   }
 
-  async remove(where: Prisma.VenueWhereUniqueInput): Promise<Venue> {
+  remove(where: Prisma.VenueWhereUniqueInput): Promise<Venue> {
     return this.prisma.venue.delete({
       where,
     });

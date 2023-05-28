@@ -15,7 +15,7 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   name      String?
-  createdAt   DateTime   @default(now())
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   venues    Venue[]
   artists   Artist[]
@@ -28,8 +28,8 @@ model Venue {
   description String?
   published   Boolean?   @default(false)
   seats       Int?
-  user        User?      @relation(fields: [userId], references: [id])
-  userId      Int?
+  user        User       @relation(fields: [userId], references: [id])
+  userId      Int
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   timeslots   TimeSlot[]
@@ -44,8 +44,8 @@ model Artist {
   username    String    @unique
   description String?
   published   Boolean?  @default(false)
-  user        User?     @relation(fields: [userId], references: [id])
-  userId      Int?
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   Booking     Booking[]
@@ -57,8 +57,8 @@ model TimeSlot {
   id        Int       @id @default(autoincrement())
   start     DateTime
   end       DateTime
-  venue     Venue?    @relation(fields: [venueId], references: [id])
-  venueId   Int?
+  venue     Venue     @relation(fields: [venueId], references: [id])
+  venueId   Int
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Booking   Booking[]
@@ -69,12 +69,12 @@ model TimeSlot {
 model Booking {
   id         Int           @id @default(autoincrement())
   status     BookingStatus @default(PENDING)
-  venue      Venue?        @relation(fields: [venueId], references: [id])
-  venueId    Int?
+  venue      Venue         @relation(fields: [venueId], references: [id])
+  venueId    Int
   artist     Artist?       @relation(fields: [artistId], references: [id])
   artistId   Int?
-  timeSlot   TimeSlot?     @relation(fields: [timeSlotId], references: [id])
-  timeSlotId Int?
+  timeSlot   TimeSlot      @relation(fields: [timeSlotId], references: [id])
+  timeSlotId Int
   createdAt  DateTime      @default(now())
   updatedAt  DateTime      @updatedAt
 
