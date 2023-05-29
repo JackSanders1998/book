@@ -14,8 +14,5 @@ export class CreateArtistDto {
   published?: boolean;
 
   @ApiProperty()
-  seats: number;
-
-  @ApiProperty()
   userId: number;
 }
