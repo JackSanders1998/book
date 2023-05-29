@@ -40,17 +40,17 @@ $ npm run test:cov
   {
     "id": 1,
     "email": "jack@gmail.com",
-    "name": "jack",
+    "name": "jack"
   },
   {
     "id": 2,
     "email": "isabel@gmail.com",
-    "name": "isabel",
+    "name": "isabel"
   },
   {
     "id": 3,
     "email": "hank@gmail.com",
-    "name": "hank",
+    "name": "hank"
   }
 ]
 
@@ -63,7 +63,7 @@ $ npm run test:cov
     "username": "the-chicago-theater",
     "description": "A theater in Chicago.",
     "published": false,
-    "seats": 1500,
+    "seats": 1500
   }
 ]
 
@@ -75,7 +75,7 @@ $ npm run test:cov
     "artistName": "Tallest Man on Earth",
     "username": "tallest-man-on-earth",
     "description": "A man on earth who is tall.",
-    "published": false,
+    "published": false
   },
   {
     "id": 5,
@@ -83,7 +83,7 @@ $ npm run test:cov
     "artistName": "A Tribe Called Quest",
     "username": "a-tribe-called-quest",
     "description": "We are a tribe by the name of quest.",
-    "published": false,
+    "published": false
   }
 ]
 
@@ -93,24 +93,60 @@ $ npm run test:cov
     "id": 6,
     "venueId": 3,
     "start": "2023-05-29T14:41:16.692Z",
-    "end": "2023-05-29T16:41:16.692Z",
+    "end": "2023-05-29T16:41:16.692Z"
   },
   {
     "id": 7,
     "venueId": 3,
     "start": "2023-06-29T18:41:16.692Z",
-    "end": "2023-06-29T19:51:16.692Z",
+    "end": "2023-06-29T19:51:16.692Z"
   },
   {
     "id": 8,
     "venueId": 3,
     "start": "2023-05-30T13:00:00.000Z",
-    "end": "2023-05-30T15:00:00.000Z",
+    "end": "2023-05-30T15:00:00.000Z"
   }
 ]
 
 # bookings table
+[
+  {
+    "id": 9,
+    "status": "REQUESTED",
+    "venueId": 1,
+    "artistId": 4,
+    "timeSlotId": 6
+  },
+  {
+    "id": 10,
+    "status": "REQUESTED",
+    "venueId": 1,
+    "artistId": 4,
+    "timeSlotId": 7
+  },
+  {
+    "id": 11,
+    "status": "REQUESTED",
+    "venueId": 1,
+    "artistId": 4,
+    "timeSlotId": 7
+  },
+  {
+    "id": 12,
+    "status": "REQUESTED",
+    "venueId": 1,
+    "artistId": 5,
+    "timeSlotId": 8
+  }
+]
 
+# note: all rows contain createdAt and updatedAt
+{
+  ...
+  "createdAt": "2023-05-29T21:00:00.373Z",
+  "updatedAt": "2023-05-29T21:00:00.373Z"
+}
 ```
 
 ```
